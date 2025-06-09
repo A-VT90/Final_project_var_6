@@ -608,3 +608,21 @@ body {
   50% { transform: translateY(-20px); }
   100% { transform: translateY(0); }
 }
+/* NO SIGNAL */
+.no-signal {
+  margin-top: 2rem;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.no-signal img {
+  width: 120px; /* Уменьшаем размер */
+  max-width: 80vw;
+  filter: contrast(1.2) brightness(1.1);
+}
+
+@media (max-width: 600px) {
+  .no-signal img {
+    width: 80px; /* Ещё меньше на мобильных */
+  }
+}
