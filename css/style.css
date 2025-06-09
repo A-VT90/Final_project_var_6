@@ -274,6 +274,7 @@ body {
   padding: 3rem 2rem;
   text-align: center;
   margin-bottom: 0;
+  position: relative;
 }
 
 .swiper-container {
@@ -282,6 +283,18 @@ body {
   margin: 2rem auto;
   padding-bottom: 3rem;
   margin-bottom: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  transition-property: transform;
+  box-sizing: content-box;
 }
 
 .swiper-slide {
@@ -294,6 +307,9 @@ body {
   padding: 2rem 1rem;
   min-height: 420px;
   transition: box-shadow 0.2s;
+  flex-shrink: 0;
+  width: 100%;
+  height: auto;
 }
 
 .swiper-slide:focus-within,
@@ -432,12 +448,25 @@ body {
 /* Декоративная сетка */
 .decor-grid {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 0;
   pointer-events: none;
   background: repeating-linear-gradient(0deg, var(--neon-blue) 0 1px, transparent 1px 40px),
               repeating-linear-gradient(90deg, var(--neon-blue) 0 1px, transparent 1px 40px);
   opacity: 0.1;
+  height: 100vh;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .decor-grid {
+    height: 100%;
+    position: absolute;
+  }
 }
 
 /* Терминальный лог */
@@ -465,7 +494,9 @@ body {
   opacity: 0.2;
   pointer-events: none;
   z-index: 1;
+  display: none; /* По умолчанию скрыт */
 }
+
 .decor-sphere {
   position: fixed;
   left: -120px;
@@ -476,7 +507,9 @@ body {
   pointer-events: none;
   z-index: 0;
   animation: float 6s ease-in-out infinite;
+  display: none; /* По умолчанию скрыт */
 }
+
 .decor-hand-bottom {
   position: fixed;
   right: 0;
@@ -485,47 +518,33 @@ body {
   opacity: 0.3;
   pointer-events: none;
   z-index: 0;
+  display: none; /* По умолчанию скрыт */
 }
 
-/* NO SIGNAL */
-.no-signal {
-  margin-top: 2rem;
-  text-align: center;
-  opacity: 0.7;
-}
-.no-signal img {
-  width: 180px;
-  max-width: 80vw;
-  filter: contrast(1.2) brightness(1.1);
+/* Показываем декоративные элементы только на десктопе */
+@media (min-width: 1200px) {
+  .decor-hand,
+  .decor-sphere,
+  .decor-hand-bottom {
+    display: block;
+  }
 }
 
 /* Адаптив */
 @media (max-width: 900px) {
-  .terminal-log { font-size: 0.9rem; left: 1vw; }
-  .decor-hand { 
-    width: 180px; 
-    right: -40px; 
-    bottom: -30px;
-    display: none; /* Скрываем на мобильных */
-  }
-  .decor-sphere { 
-    width: 180px; 
-    left: -60px; 
-    bottom: -40px;
-    display: none; /* Скрываем на мобильных */
-  }
-  .decor-hand-bottom { 
-    width: 120px;
-    display: none; /* Скрываем на мобильных */
+  .terminal-log { 
+    font-size: 0.9rem; 
+    left: 1vw; 
   }
   .neon-line {
     display: none;
   }
 }
+
 @media (max-width: 600px) {
-  .terminal-log { font-size: 0.8rem; top: 50px; }
-  .decor-hand, .decor-sphere, .decor-hand-bottom { 
-    display: none; /* Убеждаемся, что элементы скрыты */
+  .terminal-log { 
+    font-size: 0.8rem; 
+    top: 50px; 
   }
   .glitch {
     animation: none;
